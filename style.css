@@ -1,0 +1,247 @@
+/* 
+  Explicação do CSS:
+  Este arquivo contém todos os estilos personalizados para o aplicativo Playlist de Humor.
+  Ele utiliza variáveis CSS para gerenciar os temas claro/escuro e as paletas de cores dinâmicas baseadas no humor.
+  As seções estão organizadas para estilizar o corpo, os botões, a playlist e garantir a responsividade.
+*/
+
+/* Variáveis de Cores (Tema Claro como padrão) */
+:root {
+    --bg-color: #f0f2f5;
+    --text-color: #333;
+    --card-bg-color: #ffffff;
+    --border-color: #dee2e6;
+    --shadow-color: rgba(0, 0, 0, 0.1);
+
+    /* Cores para elementos Bootstrap customizados */
+    --bs-primary-rgb: 13, 110, 253; /* Default Bootstrap primary blue */
+    --badge-bg-color: var(--bs-primary-rgb);
+    --badge-text-color: #fff;
+
+    --success-btn-bg: #198754;
+    --success-btn-border: #198754;
+    --success-btn-text: #fff;
+
+    --danger-btn-bg: #dc3545;
+    --danger-btn-border: #dc3545;
+    --danger-btn-text: #fff;
+
+    /* Cores base para os humores */
+    --happy-primary: #ffc107;
+    --happy-secondary: #fff8e1;
+    --sad-primary: #0d6efd;
+    --sad-secondary: #e7f1ff;
+    --energetic-primary: #dc3545;
+    --energetic-secondary: #fde8ea;
+    --calm-primary: #198754;
+    --calm-secondary: #e8f3ee;
+
+    --relaxed-primary: #6a0dad;
+    --relaxed-secondary: #f3e5f5;
+
+    --focused-primary: #00bcd4;
+    --focused-secondary: #e0f7fa;
+
+    --irritated-primary: #ff5722;
+    --irritated-secondary: #ffe0b2;
+
+    --playful-primary: #e91e63;
+    --playful-secondary: #fce4ec;
+}
+
+/* Tema Escuro */
+:root[data-theme='dark'] {
+    --bg-color: #1a1a1a;
+    --text-color: #f0f2f5;
+    --card-bg-color: #2a2a2a;
+    --border-color: #444;
+    --shadow-color: rgba(0, 0, 0, 0.4);
+
+    /* Cores para elementos Bootstrap customizados no tema escuro */
+    --bs-primary-rgb: 108, 166, 255; /* Lighter blue for dark theme */
+    --badge-bg-color: var(--bs-primary-rgb);
+    --badge-text-color: #1a1a1a;
+
+    --success-btn-bg: #28a745;
+    --success-btn-border: #28a745;
+    --success-btn-text: #1a1a1a;
+
+    --danger-btn-bg: #dc3545;
+    --danger-btn-border: #dc3545;
+    --danger-btn-text: #1a1a1a;
+
+    /* Cores base para os humores no tema escuro */
+    --happy-primary: #ffeb3b; /* Darker yellow */
+    --happy-secondary: #424200; /* Darker background for happy */
+    --sad-primary: #64b5f6; /* Lighter blue for dark theme */
+    --sad-secondary: #002855; /* Darker background for sad */
+    --energetic-primary: #ef5350; /* Lighter red for dark theme */
+    --energetic-secondary: #5c0000; /* Darker background for energetic */
+    --calm-primary: #81c784; /* Lighter green for dark theme */
+    --calm-secondary: #003300;
+
+    /* Cores base para os humores no tema escuro */
+    --relaxed-primary: #bb86fc;
+    --relaxed-secondary: #2a0050;
+
+    --focused-primary: #80deea;
+    --focused-secondary: #00262c;
+
+    --irritated-primary: #ffab91;
+    --irritated-secondary: #4d1a00;
+
+    --playful-primary: #f48fb1;
+    --playful-secondary: #4a001f; /* Darker background for calm */
+}
+
+/* Estilos Gerais */
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+.app-title {
+    font-weight: 700;
+}
+
+/* Botão de Troca de Tema */
+#theme-switcher {
+    cursor: pointer;
+}
+
+/* Botões de Humor */
+.mood-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    height: 180px;
+    aspect-ratio: 1/1; /* Makes it square */
+    border-radius: 10px;
+    border: 2px solid transparent;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.mood-btn:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px var(--shadow-color);
+}
+
+/* Cores dinâmicas dos botões */
+[data-mood="happy"] { --mood-primary: var(--happy-primary); --mood-secondary: var(--happy-secondary); }
+[data-mood="sad"] { --mood-primary: var(--sad-primary); --mood-secondary: var(--sad-secondary); }
+[data-mood="energetic"] { --mood-primary: var(--energetic-primary); --mood-secondary: var(--energetic-secondary); }
+[data-mood="calm"] { --mood-primary: var(--calm-primary); --mood-secondary: var(--calm-secondary); }
+
+.mood-btn[data-mood="happy"] { background-color: var(--happy-secondary); border-color: var(--happy-primary); color: var(--happy-primary); }
+.mood-btn[data-mood="sad"] { background-color: var(--sad-secondary); border-color: var(--sad-primary); color: var(--sad-primary); }
+.mood-btn[data-mood="energetic"] { background-color: var(--energetic-secondary); border-color: var(--energetic-primary); color: var(--energetic-primary); }
+.mood-btn[data-mood="calm"] { background-color: var(--calm-secondary); border-color: var(--calm-primary); color: var(--calm-primary); }
+
+.mood-btn[data-mood="relaxed"] { background-color: var(--relaxed-secondary); border-color: var(--relaxed-primary); color: var(--relaxed-primary); }
+.mood-btn[data-mood="focused"] { background-color: var(--focused-secondary); border-color: var(--focused-primary); color: var(--focused-primary); }
+.mood-btn[data-mood="irritated"] { background-color: var(--irritated-secondary); border-color: var(--irritated-primary); color: var(--irritated-primary); }
+.mood-btn[data-mood="playful"] { background-color: var(--playful-secondary); border-color: var(--playful-primary); color: var(--playful-primary); }
+
+/* Estilos para os elementos internos dos botões de humor */
+.mood-icon {
+    font-size: 3rem; /* Ícone maior */
+    margin-bottom: 0.5rem; /* Espaço entre ícone e nome */
+}
+
+.mood-name {
+    font-size: 1.2rem; /* Tamanho do nome do humor */
+    font-weight: 700; /* Nome do humor em negrito */
+    text-align: center;
+}
+
+.mood-description {
+    font-size: 0.85rem; /* Tamanho da descrição */
+    opacity: 0.8; /* Descrição levemente esmaecida */
+    text-align: center;
+    margin-top: 0.2rem; /* Espaço entre nome e descrição */
+}
+
+
+
+/* Seção da Playlist */
+#playlist-section {
+    padding: 2rem;
+    background-color: var(--card-bg-color);
+    border-radius: 15px;
+    box-shadow: 0 4px 20px var(--shadow-color);
+    transition: background-color 0.5s ease, border-color 0.5s ease;
+    border: 2px solid transparent; /* Adicionado para transição de borda */
+}
+
+/* Estilos para a borda da playlist baseada no humor */
+#playlist-section[data-mood="happy"] { border-color: var(--happy-primary); }
+#playlist-section[data-mood="sad"] { border-color: var(--sad-primary); }
+#playlist-section[data-mood="energetic"] { border-color: var(--energetic-primary); }
+#playlist-section[data-mood="calm"] { border-color: var(--calm-primary); }
+
+.list-group-item {
+    background-color: transparent;
+    border-color: var(--border-color);
+    color: var(--text-color);
+    transition: background-color 0.3s ease;
+}
+
+.list-group-item:hover {
+    background-color: rgba(0,0,0,0.05);
+}
+
+[data-theme='dark'] .list-group-item:hover {
+    background-color: rgba(255,255,255,0.05);
+}
+
+/* Customização de componentes Bootstrap para tema */
+.badge.bg-primary {
+    background-color: rgb(var(--badge-bg-color)) !important;
+    color: var(--badge-text-color) !important;
+}
+
+.btn-success {
+    background-color: var(--success-btn-bg) !important;
+    border-color: var(--success-btn-border) !important;
+    color: var(--success-btn-text) !important;
+}
+
+.btn-danger {
+    background-color: var(--danger-btn-bg) !important;
+    border-color: var(--danger-btn-border) !important;
+    color: var(--danger-btn-text) !important;
+}
+
+/* Seção de Extras */
+#extra-features {
+    padding: 1.5rem;
+    background-color: var(--card-bg-color);
+    border-radius: 15px;
+    margin-top: 3rem;
+}
+
+/* Footer */
+footer {
+    color: var(--text-color);
+    opacity: 0.7;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .app-title {
+        font-size: 1.8rem;
+    }
+
+    .mood-btn {
+        padding: 12px;
+        font-size: 1rem;
+    }
+
+    #playlist-section {
+        padding: 1.5rem;
+    }
+}
