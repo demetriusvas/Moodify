@@ -28,14 +28,27 @@ document.addEventListener('DOMContentLoaded', () => {
     const googleLoginBtn = document.getElementById('google-login-btn');
     const logoutBtn = document.getElementById('logout-btn');
 
-    const showSignup = document.getElementById('show-signup');
-    const showLogin = document.getElementById('show-login');
     const showForgotPassword = document.getElementById('show-forgot-password');
-    const backToLoginFromForgot = document.getElementById('back-to-login-from-forgot');
-    const backToLoginFromEmailSent = document.getElementById('back-to-login-from-email-sent');
-    const backToLoginFromSuccess = document.getElementById('back-to-login-from-success');
+    if (showForgotPassword) {
+        showForgotPassword.addEventListener('click', (e) => { e.preventDefault(); loginView.style.display = 'none'; forgotPasswordView.style.display = 'block'; });
+    }
 
-    // --- LÓGICA DE AUTENTICAÇÃO ---
+    const backToLoginFromForgot = document.getElementById('back-to-login-from-forgot');
+    if (backToLoginFromForgot) {
+        backToLoginFromForgot.addEventListener('click', (e) => { e.preventDefault(); forgotPasswordView.style.display = 'none'; loginView.style.display = 'block'; });
+    }
+
+    const backToLoginFromEmailSent = document.getElementById('back-to-login-from-email-sent');
+    if (backToLoginFromEmailSent) {
+        backToLoginFromEmailSent.addEventListener('click', (e) => { e.preventDefault(); emailSentView.style.display = 'none'; loginView.style.display = 'block'; });
+    }
+
+    const backToLoginFromSuccess = document.getElementById('back-to-login-from-success');
+    if (backToLoginFromSuccess) {
+        backToLoginFromSuccess.addEventListener('click', (e) => { e.preventDefault(); resetPasswordSuccessView.style.display = 'none'; loginView.style.display = 'block'; });
+    }
+
+    // --- LÓGICA DO FORMULÁRIO DE ESQUECI A SENHA ---
     signupForm.addEventListener('submit', (e) => {
         e.preventDefault();
         const name = document.getElementById('signup-name').value;
