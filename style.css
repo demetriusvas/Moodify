@@ -385,26 +385,95 @@ form {
 
 .mood-buttons {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    grid-template-columns: repeat(4, 1fr); /* 4 columns */
     gap: 15px;
     margin-bottom: 30px;
 }
 
 .mood-btn {
-    padding: 20px;
-    font-size: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 25px 15px; /* Increased padding */
     border: 1px solid var(--mood-btn-border);
     background-color: var(--mood-btn-bg);
-    border-radius: 8px;
+    border-radius: 16px; /* More rounded corners */
     cursor: pointer;
     transition: all 0.3s ease;
     color: var(--text-color-primary);
+    text-align: center;
+    box-shadow: 0 4px 10px var(--shadow-color); /* Add shadow */
 }
 
 .mood-btn:hover {
     transform: translateY(-3px);
-    box-shadow: 0 4px 10px var(--shadow-color);
+    box-shadow: 0 6px 15px var(--shadow-color);
     border-color: var(--mood-btn-hover-border);
+}
+
+.mood-icon {
+    font-size: 48px; /* Larger emoji */
+    margin-bottom: 10px;
+}
+
+.mood-title {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.mood-subtitle {
+    font-size: 14px;
+    color: var(--text-color-secondary);
+}
+
+/* Specific Mood Button Backgrounds */
+.mood-btn[data-mood="feliz"] {
+    background: linear-gradient(135deg, #FFD700, #FFA500); /* Gold to Orange */
+    color: #333; /* Dark text for light background */
+}
+
+.mood-btn[data-mood="triste"] {
+    background: linear-gradient(135deg, #6A5ACD, #483D8B); /* Slate Blue to Dark Slate Blue */
+    color: white;
+}
+
+.mood-btn[data-mood="animado"] {
+    background: linear-gradient(135deg, #FF69B4, #FF1493); /* Hot Pink to Deep Pink */
+    color: white;
+}
+
+.mood-btn[data-mood="foco"] {
+    background: linear-gradient(135deg, #4682B4, #5F9EA0); /* Steel Blue to Cadet Blue */
+    color: white;
+}
+
+.mood-btn[data-mood="relaxado"] {
+    background: linear-gradient(135deg, #8FBC8F, #6B8E23); /* Dark Sea Green to Olive Drab */
+    color: white;
+}
+
+.mood-btn[data-mood="energico"] {
+    background: linear-gradient(135deg, #FF4500, #FF8C00); /* Orange Red to Dark Orange */
+    color: white;
+}
+
+.mood-btn[data-mood="pensativo"] {
+    background: linear-gradient(135deg, #708090, #2F4F4F); /* Slate Gray to Dark Slate Gray */
+    color: white;
+}
+
+.mood-btn[data-mood="irritado"] {
+    background: linear-gradient(135deg, #DC143C, #B22222); /* Crimson to Firebrick */
+    color: white;
+}
+
+/* Active/Selected Mood Button */
+.mood-btn.selected {
+    border: 3px solid var(--primary-color); /* Spotify Green border */
+    box-shadow: 0 0 0 5px rgba(29, 185, 84, 0.5); /* Green glow */
+    transform: scale(1.02); /* Slightly enlarge */
 }
 
 .mood-content-area {

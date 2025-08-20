@@ -236,6 +236,14 @@ document.addEventListener('DOMContentLoaded', () => {
         moodButtonsContainer.addEventListener('click', (e) => {
             const target = e.target.closest('.mood-btn');
             if (target) {
+                // Remove 'selected' class from all mood buttons
+                document.querySelectorAll('.mood-btn').forEach(btn => {
+                    btn.classList.remove('selected');
+                });
+
+                // Add 'selected' class to the clicked button
+                target.classList.add('selected');
+
                 const selectedMood = target.dataset.mood;
                 moodContent.innerHTML = `<p>${moodSuggestions[selectedMood]}</p>`;
             }
