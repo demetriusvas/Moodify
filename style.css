@@ -139,6 +139,11 @@ body {
     border-color: #cbd5e0;
 }
 
+.btn-google img {
+    width: 20px;
+    height: 20px;
+}
+
 .divider {
     text-align: center;
     margin: 25px 0;
