@@ -61,16 +61,15 @@ document.addEventListener('DOMContentLoaded', () => {
             let message = 'Ocorreu um erro desconhecido.';
             switch (err.code) {
                 case 'auth/user-not-found':
-                    message = 'Nenhum usuário encontrado com este e-mail.';
-                    break;
                 case 'auth/wrong-password':
-                    message = 'Senha incorreta. Por favor, tente novamente.';
+                case 'auth/invalid-credential':
+                    message = 'E-mail ou senha incorretos. Verifique e tente novamente.';
                     break;
                 case 'auth/invalid-email':
                     message = 'O formato do e-mail é inválido.';
                     break;
                 default:
-                    message = err.message; // Fallback para a mensagem original
+                    message = 'Ocorreu um erro ao tentar fazer o login.'; // Mensagem genérica para outros erros
             }
             errorElement.textContent = message;
             errorElement.style.display = 'block';
