@@ -17,16 +17,21 @@ document.addEventListener('DOMContentLoaded', () => {
     const loginView = document.getElementById('login-view');
     const signupView = document.getElementById('signup-view');
     const userView = document.getElementById('user-view');
+    const forgotPasswordView = document.getElementById('forgot-password-view');
+    const resetPasswordSuccessView = document.getElementById('reset-password-success-view');
 
     const loginForm = document.getElementById('login-form');
     const signupForm = document.getElementById('signup-form');
+    const forgotPasswordForm = document.getElementById('forgot-password-form');
 
     const googleLoginBtn = document.getElementById('google-login-btn');
     const logoutBtn = document.getElementById('logout-btn');
 
     const showSignup = document.getElementById('show-signup');
     const showLogin = document.getElementById('show-login');
-    const forgotPasswordLink = document.getElementById('show-forgot-password');
+    const showForgotPassword = document.getElementById('show-forgot-password');
+    const backToLoginFromForgot = document.getElementById('back-to-login-from-forgot');
+    const backToLoginFromSuccess = document.getElementById('back-to-login-from-success');
 
     // --- LÓGICA DE AUTENTICAÇÃO ---
     signupForm.addEventListener('submit', (e) => {
@@ -54,19 +59,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
     logoutBtn.addEventListener('click', () => auth.signOut());
 
-    forgotPasswordLink.addEventListener('click', (e) => {
+    // --- ROTEAMENTO DAS PÁGINAS DE AUTENTICAÇÃO ---
+    showSignup.addEventListener('click', (e) => { e.preventDefault(); loginView.style.display = 'none'; signupView.style.display = 'block'; });
+    showLogin.addEventListener('click', (e) => { e.preventDefault(); signupView.style.display = 'none'; loginView.style.display = 'block'; });
+    showForgotPassword.addEventListener('click', (e) => { e.preventDefault(); loginView.style.display = 'none'; forgotPasswordView.style.display = 'block'; });
+    backToLoginFromForgot.addEventListener('click', (e) => { e.preventDefault(); forgotPasswordView.style.display = 'none'; loginView.style.display = 'block'; });
+    backToLoginFromSuccess.addEventListener('click', (e) => { e.preventDefault(); resetPasswordSuccessView.style.display = 'none'; loginView.style.display = 'block'; });
+
+    // --- LÓGICA DO FORMULÁRIO DE ESQUECI A SENHA ---
+    forgotPasswordForm.addEventListener('submit', (e) => {
         e.preventDefault();
-        const email = prompt("Por favor, insira seu e-mail para redefinir a senha:");
-        if (email) {
-            auth.sendPasswordResetEmail(email)
-                .then(() => {
-                    alert("E-mail de redefinição de senha enviado com sucesso! Verifique sua caixa de entrada.");
-                })
-                .catch((err) => {
-                    alert("Erro ao enviar e-mail de redefinição de senha: " + err.message);
-                });
-        }
+        const email = document.getElementById('forgot-email').value;
+        auth.sendPasswordResetEmail(email)
+            .then(() => {
+                forgotPasswordView.style.display = 'none';
+                resetPasswordSuccessView.style.display = 'block';
+            })
+            .catch(err => alert(err.message));
     });
+
 
     // --- OBSERVADOR GERAL E ROTEAMENTO DE PÁGINA ---
     auth.onAuthStateChanged((user) => {
@@ -74,12 +85,16 @@ document.addEventListener('DOMContentLoaded', () => {
             // Usuário logado: mostra a interface principal
             loginView.style.display = 'none';
             signupView.style.display = 'none';
+            forgotPasswordView.style.display = 'none';
+            resetPasswordSuccessView.style.display = 'none';
             userView.style.display = 'block';
             setupApp(user);
         } else {
             // Usuário deslogado: mostra a tela de login
             loginView.style.display = 'block';
             signupView.style.display = 'none';
+            forgotPasswordView.style.display = 'none';
+            resetPasswordSuccessView.style.display = 'none';
             userView.style.display = 'none';
         }
     });
@@ -134,7 +149,5 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Links para alternar entre login/cadastro
-    showSignup.addEventListener('click', (e) => { e.preventDefault(); loginView.style.display = 'none'; signupView.style.display = 'block'; });
-    showLogin.addEventListener('click', (e) => { e.preventDefault(); signupView.style.display = 'none'; loginView.style.display = 'block'; });
+    
 });

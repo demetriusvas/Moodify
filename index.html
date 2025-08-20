@@ -66,6 +66,38 @@
         </div>
     </div>
 
+    <!-- Formulário de Esqueci a Senha -->
+    <div id="forgot-password-view" class="auth-page-container" style="display: none;">
+        <div class="auth-wrapper">
+            <h1 class="auth-title">Moodify</h1>
+            <div class="form-container">
+                <h2>Redefinir Senha</h2>
+                <form id="forgot-password-form">
+                    <p>Insira seu e-mail e enviaremos um link para você redefinir sua senha.</p>
+                    <div class="input-group">
+                        <label for="forgot-email">Email</label>
+                        <input type="email" id="forgot-email" required>
+                    </div>
+                    <button type="submit" class="btn">Enviar Link</button>
+                </form>
+                <p class="toggle-form">
+                    Lembrou a senha? <a href="#" id="back-to-login-from-forgot">Voltar para o Login</a>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Página de Sucesso da Redefinição de Senha -->
+    <div id="reset-password-success-view" class="auth-page-container" style="display: none;">
+        <div class="auth-wrapper">
+            <div class="form-container">
+                <h2>Senha Redefinida!</h2>
+                <p>Sua senha foi redefinida com sucesso. Você já pode fazer login com sua nova senha.</p>
+                <button id="back-to-login-from-success" class="btn">Ir para o Login</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Área Principal do App (Visível após Login) -->
     <div id="user-view" style="display: none;">
         <div class="app-layout">
