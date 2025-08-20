@@ -18,17 +18,11 @@ body {
     font-family: 'Roboto', sans-serif;
     background-color: #eef1f5; /* Cinza claro azulado */
     color: #333;
-    width: 100%;
 }
 
 /* --- ESTILOS DA PÁGINA DE AUTENTICAÇÃO --- */
 
 .auth-page-container {
-    width: 100%;
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     padding: 20px; /* Espaçamento para telas pequenas */
 }
 
