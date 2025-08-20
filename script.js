@@ -226,7 +226,11 @@ document.addEventListener('DOMContentLoaded', () => {
             feliz: "Que ótimo! Que tal ouvir uma playlist de pop animado para manter a energia?",
             triste: "Tudo bem não se sentir bem. Uma música ambiente calma pode ajudar a relaxar.",
             animado: "Excelente! É um ótimo dia para músicas dançantes. Vamos agitar!",
-            foco: "Hora de produzir! Músicas instrumentais ou lo-fi são perfeitas para concentração."
+            foco: "Hora de produzir! Músicas instrumentais ou lo-fi são perfeitas para concentração.",
+            relaxado: "Para um momento de paz, experimente músicas instrumentais suaves ou sons da natureza.",
+            energico: "Sinta a batida! Playlists de eletrônica ou rock podem te dar o gás que precisa.",
+            pensativo: "Músicas acústicas ou clássicas são ideais para reflexão e introspecção.",
+            irritado: "Respire fundo. Uma playlist de jazz suave ou blues pode ajudar a acalmar os ânimos."
         };
 
         moodButtonsContainer.addEventListener('click', (e) => {
