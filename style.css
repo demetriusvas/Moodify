@@ -77,6 +77,22 @@ body {
     border-color: #42a5f5; /* Azul claro */
 }
 
+.forgot-password {
+    text-align: right;
+    margin-bottom: 15px;
+}
+
+.forgot-password a {
+    color: #1976d2;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.forgot-password a:hover {
+    text-decoration: underline;
+}
+
 .btn {
     width: 100%;
     padding: 12px;

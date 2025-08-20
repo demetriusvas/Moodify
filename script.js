@@ -26,6 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const showSignup = document.getElementById('show-signup');
     const showLogin = document.getElementById('show-login');
+    const forgotPasswordLink = document.getElementById('show-forgot-password');
 
     // --- LÓGICA DE AUTENTICAÇÃO ---
     signupForm.addEventListener('submit', (e) => {
@@ -52,6 +53,20 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     logoutBtn.addEventListener('click', () => auth.signOut());
+
+    forgotPasswordLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        const email = prompt("Por favor, insira seu e-mail para redefinir a senha:");
+        if (email) {
+            auth.sendPasswordResetEmail(email)
+                .then(() => {
+                    alert("E-mail de redefinição de senha enviado com sucesso! Verifique sua caixa de entrada.");
+                })
+                .catch((err) => {
+                    alert("Erro ao enviar e-mail de redefinição de senha: " + err.message);
+                });
+        }
+    });
 
     // --- OBSERVADOR GERAL E ROTEAMENTO DE PÁGINA ---
     auth.onAuthStateChanged((user) => {
