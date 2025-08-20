@@ -51,7 +51,30 @@ document.addEventListener('DOMContentLoaded', () => {
         e.preventDefault();
         const email = document.getElementById('login-email').value;
         const password = document.getElementById('login-password').value;
-        auth.signInWithEmailAndPassword(email, password).catch(err => alert(err.message));
+        const errorElement = document.getElementById('login-error');
+
+        // Esconde o erro anterior
+        errorElement.style.display = 'none';
+
+        auth.signInWithEmailAndPassword(email, password).catch(err => {
+            // Mapeia códigos de erro para mensagens amigáveis
+            let message = 'Ocorreu um erro desconhecido.';
+            switch (err.code) {
+                case 'auth/user-not-found':
+                    message = 'Nenhum usuário encontrado com este e-mail.';
+                    break;
+                case 'auth/wrong-password':
+                    message = 'Senha incorreta. Por favor, tente novamente.';
+                    break;
+                case 'auth/invalid-email':
+                    message = 'O formato do e-mail é inválido.';
+                    break;
+                default:
+                    message = err.message; // Fallback para a mensagem original
+            }
+            errorElement.textContent = message;
+            errorElement.style.display = 'block';
+        });
     });
 
     googleLoginBtn.addEventListener('click', () => {
