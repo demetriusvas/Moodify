@@ -61,8 +61,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // 4. Confirmar a nova senha no Firebase
         auth.confirmPasswordReset(oobCode, newPassword).then(() => {
-            alert("Senha redefinida com sucesso! Você será redirecionado para a página de login.");
-            window.location.href = 'index.html'; // Redireciona para a página principal
+            // Esconde o formulário e mostra a mensagem de sucesso
+            resetPasswordForm.style.display = 'none';
+            const successMessage = document.getElementById('success-message');
+            successMessage.style.display = 'block';
+
+            // Redireciona após 3 segundos
+            setTimeout(() => {
+                window.location.href = 'index.html';
+            }, 3000);
         }).catch(err => {
             showError(`Erro ao redefinir a senha: ${err.message}`);
         });
