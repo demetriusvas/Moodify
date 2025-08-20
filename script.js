@@ -28,6 +28,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const googleLoginBtn = document.getElementById('google-login-btn');
     const logoutBtn = document.getElementById('logout-btn');
 
+    const bodyElement = document.body; // Obter referência ao body
+
     const showSignup = document.getElementById('show-signup');
     const showLogin = document.getElementById('show-login');
 
@@ -81,30 +83,30 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- ROTEAMENTO DAS PÁGINAS DE AUTENTICAÇÃO ---
     if (showSignup) {
-        showSignup.addEventListener('click', (e) => { e.preventDefault(); loginView.style.display = 'none'; signupView.style.display = 'block'; });
+        showSignup.addEventListener('click', (e) => { e.preventDefault(); bodyElement.classList.add('auth-layout'); loginView.style.display = 'none'; signupView.style.display = 'block'; });
     }
     if (showLogin) {
-        showLogin.addEventListener('click', (e) => { e.preventDefault(); signupView.style.display = 'none'; loginView.style.display = 'block'; });
+        showLogin.addEventListener('click', (e) => { e.preventDefault(); bodyElement.classList.add('auth-layout'); signupView.style.display = 'none'; loginView.style.display = 'block'; });
     }
 
     const showForgotPassword = document.getElementById('show-forgot-password');
     if (showForgotPassword) {
-        showForgotPassword.addEventListener('click', (e) => { e.preventDefault(); loginView.style.display = 'none'; forgotPasswordView.style.display = 'block'; });
+        showForgotPassword.addEventListener('click', (e) => { e.preventDefault(); bodyElement.classList.add('auth-layout'); loginView.style.display = 'none'; forgotPasswordView.style.display = 'block'; });
     }
 
     const backToLoginFromForgot = document.getElementById('back-to-login-from-forgot');
     if (backToLoginFromForgot) {
-        backToLoginFromForgot.addEventListener('click', (e) => { e.preventDefault(); forgotPasswordView.style.display = 'none'; loginView.style.display = 'block'; });
+        backToLoginFromForgot.addEventListener('click', (e) => { e.preventDefault(); bodyElement.classList.add('auth-layout'); forgotPasswordView.style.display = 'none'; loginView.style.display = 'block'; });
     }
 
     const backToLoginFromEmailSent = document.getElementById('back-to-login-from-email-sent');
     if (backToLoginFromEmailSent) {
-        backToLoginFromEmailSent.addEventListener('click', (e) => { e.preventDefault(); emailSentView.style.display = 'none'; loginView.style.display = 'block'; });
+        backToLoginFromEmailSent.addEventListener('click', (e) => { e.preventDefault(); bodyElement.classList.add('auth-layout'); emailSentView.style.display = 'none'; loginView.style.display = 'block'; });
     }
 
     const backToLoginFromSuccess = document.getElementById('back-to-login-from-success');
     if (backToLoginFromSuccess) {
-        backToLoginFromSuccess.addEventListener('click', (e) => { e.preventDefault(); resetPasswordSuccessView.style.display = 'none'; loginView.style.display = 'block'; });
+        backToLoginFromSuccess.addEventListener('click', (e) => { e.preventDefault(); bodyElement.classList.add('auth-layout'); resetPasswordSuccessView.style.display = 'none'; loginView.style.display = 'block'; });
     }
 
     // --- LÓGICA DO FORMULÁRIO DE ESQUECI A SENHA ---
@@ -124,6 +126,7 @@ document.addEventListener('DOMContentLoaded', () => {
     auth.onAuthStateChanged((user) => {
         if (user) {
             // Usuário logado: mostra a interface principal
+            bodyElement.classList.remove('auth-layout'); // Remove a classe de layout de autenticação
             loginView.style.display = 'none';
             signupView.style.display = 'none';
             forgotPasswordView.style.display = 'none';
@@ -133,6 +136,7 @@ document.addEventListener('DOMContentLoaded', () => {
             setupApp(user);
         } else {
             // Usuário deslogado: mostra a tela de login
+            bodyElement.classList.add('auth-layout'); // Adiciona a classe de layout de autenticação
             loginView.style.display = 'block';
             signupView.style.display = 'none';
             forgotPasswordView.style.display = 'none';
