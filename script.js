@@ -10,8 +10,10 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     // Inicializa o Firebase
+    console.log("Inicializando Firebase...");
     firebase.initializeApp(firebaseConfig);
     const auth = firebase.auth();
+    console.log("Firebase inicializado.");
 
     // --- ELEMENTOS DA UI ---
     const loginView = document.getElementById('login-view');
@@ -47,6 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     loginForm.addEventListener('submit', (e) => {
         e.preventDefault();
+        console.log("Formulário de login submetido.");
         const email = document.getElementById('login-email').value;
         const password = document.getElementById('login-password').value;
         const errorElement = document.getElementById('login-error');
@@ -54,9 +57,14 @@ document.addEventListener('DOMContentLoaded', () => {
         // Esconde o erro anterior
         errorElement.style.display = 'none';
 
-        auth.signInWithEmailAndPassword(email, password).catch(err => {
-            // Mapeia códigos de erro para mensagens amigáveis
-            let message = 'Ocorreu um erro desconhecido.';
+        auth.signInWithEmailAndPassword(email, password)
+            .then(userCredential => {
+                console.log("Login bem-sucedido!", userCredential.user);
+            })
+            .catch(err => {
+                console.error("Erro no login:", err);
+                // Mapeia códigos de erro para mensagens amigáveis
+                let message = 'Ocorreu um erro desconhecido.';
             switch (err.code) {
                 case 'auth/user-not-found':
                 case 'auth/wrong-password':
@@ -124,6 +132,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- OBSERVADOR GERAL E ROTEAMENTO DE PÁGINA ---
     auth.onAuthStateChanged((user) => {
+        console.log("auth.onAuthStateChanged disparado. Usuário:", user);
         if (user) {
             // Usuário logado: mostra a interface principal
             bodyElement.classList.remove('auth-layout'); // Remove a classe de layout de autenticação
@@ -148,6 +157,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- LÓGICA DO APLICATIVO PRINCIPAL ---
     function setupApp(user) {
+        console.log("setupApp chamado. Usuário:", user);
         // Elementos da UI principal
         const welcomeMessage = document.getElementById('welcome-message');
         const moodButtonsContainer = document.querySelector('.mood-buttons');
