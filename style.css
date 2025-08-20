@@ -36,14 +36,11 @@ body {
 
 .form-container {
     background-color: #ffffff;
-    padding: 30px 40px;
+    padding: 50px 40px;
     border-radius: 12px;
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-    width: 336px;
-    height: 340px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+    width: 100%;
+    max-width: 336px;
 }
 
 .form-container h2 {
