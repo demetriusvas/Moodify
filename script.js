@@ -35,6 +35,38 @@ document.addEventListener('DOMContentLoaded', () => {
     const showSignup = document.getElementById('show-signup');
     const showLogin = document.getElementById('show-login');
 
+    const themeToggle = document.getElementById('theme-toggle');
+
+    // --- LÓGICA DE TEMA --- 
+    const currentTheme = localStorage.getItem('theme');
+    if (currentTheme) {
+        bodyElement.classList.add(currentTheme);
+        if (currentTheme === 'dark-theme') {
+            themeToggle.querySelector('i').classList.replace('fa-sun', 'fa-moon');
+        } else {
+            themeToggle.querySelector('i').classList.replace('fa-moon', 'fa-sun');
+        }
+    } else {
+        // Default to dark theme if no preference is found
+        bodyElement.classList.add('dark-theme');
+        themeToggle.querySelector('i').classList.replace('fa-sun', 'fa-moon');
+        localStorage.setItem('theme', 'dark-theme');
+    }
+
+    if (themeToggle) {
+        themeToggle.addEventListener('click', () => {
+            if (bodyElement.classList.contains('dark-theme')) {
+                bodyElement.classList.replace('dark-theme', 'light-theme');
+                themeToggle.querySelector('i').classList.replace('fa-moon', 'fa-sun');
+                localStorage.setItem('theme', 'light-theme');
+            } else {
+                bodyElement.classList.replace('light-theme', 'dark-theme');
+                themeToggle.querySelector('i').classList.replace('fa-sun', 'fa-moon');
+                localStorage.setItem('theme', 'dark-theme');
+            }
+        });
+    }
+
     // --- LÓGICA DE AUTENTICAÇÃO ---
     signupForm.addEventListener('submit', (e) => {
         e.preventDefault();
