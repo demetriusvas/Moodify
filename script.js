@@ -18,6 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const signupView = document.getElementById('signup-view');
     const userView = document.getElementById('user-view');
     const forgotPasswordView = document.getElementById('forgot-password-view');
+    const emailSentView = document.getElementById('email-sent-view');
     const resetPasswordSuccessView = document.getElementById('reset-password-success-view');
 
     const loginForm = document.getElementById('login-form');
@@ -31,6 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const showLogin = document.getElementById('show-login');
     const showForgotPassword = document.getElementById('show-forgot-password');
     const backToLoginFromForgot = document.getElementById('back-to-login-from-forgot');
+    const backToLoginFromEmailSent = document.getElementById('back-to-login-from-email-sent');
     const backToLoginFromSuccess = document.getElementById('back-to-login-from-success');
 
     // --- LÓGICA DE AUTENTICAÇÃO ---
@@ -64,6 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
     showLogin.addEventListener('click', (e) => { e.preventDefault(); signupView.style.display = 'none'; loginView.style.display = 'block'; });
     showForgotPassword.addEventListener('click', (e) => { e.preventDefault(); loginView.style.display = 'none'; forgotPasswordView.style.display = 'block'; });
     backToLoginFromForgot.addEventListener('click', (e) => { e.preventDefault(); forgotPasswordView.style.display = 'none'; loginView.style.display = 'block'; });
+    backToLoginFromEmailSent.addEventListener('click', (e) => { e.preventDefault(); emailSentView.style.display = 'none'; loginView.style.display = 'block'; });
     backToLoginFromSuccess.addEventListener('click', (e) => { e.preventDefault(); resetPasswordSuccessView.style.display = 'none'; loginView.style.display = 'block'; });
 
     // --- LÓGICA DO FORMULÁRIO DE ESQUECI A SENHA ---
@@ -73,7 +76,7 @@ document.addEventListener('DOMContentLoaded', () => {
         auth.sendPasswordResetEmail(email)
             .then(() => {
                 forgotPasswordView.style.display = 'none';
-                resetPasswordSuccessView.style.display = 'block';
+                emailSentView.style.display = 'block';
             })
             .catch(err => alert(err.message));
     });
@@ -86,6 +89,7 @@ document.addEventListener('DOMContentLoaded', () => {
             loginView.style.display = 'none';
             signupView.style.display = 'none';
             forgotPasswordView.style.display = 'none';
+            emailSentView.style.display = 'none';
             resetPasswordSuccessView.style.display = 'none';
             userView.style.display = 'block';
             setupApp(user);
@@ -94,6 +98,7 @@ document.addEventListener('DOMContentLoaded', () => {
             loginView.style.display = 'block';
             signupView.style.display = 'none';
             forgotPasswordView.style.display = 'none';
+            emailSentView.style.display = 'none';
             resetPasswordSuccessView.style.display = 'none';
             userView.style.display = 'none';
         }
