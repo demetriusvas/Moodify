@@ -8,33 +8,45 @@
 </head>
 <body>
 
-    <!-- Formulário de Login -->
+    <!-- Formulário de Login (Estilo Google) -->
     <div id="login-view" class="auth-page-container">
-        <h1 class="auth-title">Moodify</h1>
-        <div class="form-container">
-            <h2>Login</h2>
+        <div class="google-login-container">
+            <div class="google-login-left">
+                <img src="https://developers.google.com/identity/images/g-logo.png" alt="Google Logo" class="google-logo">
+                <h1 class="google-title">Fazer login</h1>
+                <p class="google-subtitle">Ir para o Moodify</p>
+            </div>
+            <div class="google-login-right">
                 <form id="login-form">
                     <p id="login-error" class="error-message" style="display: none;"></p>
                     <div class="input-group">
-                        <label for="login-email">Email</label>
-                        <input type="email" id="login-email" required>
+                        <input type="email" id="login-email" required placeholder=" ">
+                        <label for="login-email">E-mail ou telefone</label>
                     </div>
                     <div class="input-group">
+                        <input type="password" id="login-password" required placeholder=" ">
                         <label for="login-password">Senha</label>
-                        <input type="password" id="login-password" required>
                     </div>
-                    <p class="forgot-password"><a href="#" id="show-forgot-password">Esqueceu a senha?</a></p>
-                    <button type="submit" class="btn">Entrar</button>
+                    <p class="forgot-password"><a href="#" id="show-forgot-password">Esqueceu seu e-mail?</a></p>
+                    <div class="google-buttons">
+                        <a href="#" id="show-signup" class="google-create-account">Criar conta</a>
+                        <button type="submit" class="btn-google-next">Avançar</button>
+                    </div>
                 </form>
-                <p class="divider">ou</p>
+                 <p class="divider">ou</p>
                 <button id="google-login-btn" class="btn btn-google">
                     <img src="https://developers.google.com/identity/images/g-logo.png" alt="Google Logo">
                     Entrar com Google
                 </button>
-                <p class="toggle-form">
-                    Não tem uma conta? <a href="#" id="show-signup">Crie uma agora</a>
-                </p>
             </div>
+        </div>
+        <div class="google-footer">
+            <span>Português (Brasil)</span>
+            <ul>
+                <li><a href="#">Ajuda</a></li>
+                <li><a href="#">Privacidade</a></li>
+                <li><a href="#">Termos</a></li>
+            </ul>
         </div>
     </div>
 
