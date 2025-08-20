@@ -26,10 +26,14 @@ body {
     color: #333;
 }
 
-/* --- ESTILOS DA PÁGINA DE AUTENTICAÇÃO --- */
+/* --- ESTILOS DA PÁGINA DE AUTENTICAÇÃO (NOVO DESIGN) --- */
+.auth-layout {
+    background: linear-gradient(to top, #e0e9f0, #f8f9fa);
+}
 
 .auth-page-container {
-    padding: 20px; /* Espaçamento para telas pequenas */
+    width: 100%;
+    padding: 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -37,144 +41,120 @@ body {
 }
 
 .auth-title {
-    font-size: 52px;
+    font-size: 48px;
     font-weight: 700;
-    color: #0d47a1; /* Azul escuro */
+    color: #2c5282; /* Azul acinzentado escuro */
     text-align: center;
-    margin-bottom: 25px;
+    margin-bottom: 30px;
 }
 
 .form-container {
     background-color: #ffffff;
-    padding: 50px 40px;
-    border-radius: 12px;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    padding: 40px;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
     width: 100%;
-    max-width: 450px; /* Aumenta a largura máxima */
+    max-width: 420px;
+    border: 1px solid #e2e8f0;
 }
-
-
 
 .form-container h2 {
     text-align: center;
-    margin-bottom: 25px;
-    color: #333; /* Cor mais suave para o H2 do formulário */
-    font-weight: 700;
-    font-size: 24px;
-}
-
-.form-container p {
-    text-align: center;
-    margin-bottom: 20px;
-    color: #555;
+    margin-bottom: 30px;
+    color: #334155;
+    font-weight: 600;
+    font-size: 22px;
 }
 
 .input-group {
     margin-bottom: 20px;
-    position: relative;
 }
 
 .input-group label {
     display: block;
     margin-bottom: 8px;
     font-weight: 500;
-    color: #555;
+    color: #4a5568;
 }
 
 .input-group input {
     width: 100%;
-    padding: 12px 15px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
+    padding: 14px 18px;
+    border: 1px solid #cbd5e0;
+    border-radius: 10px;
     font-size: 16px;
-    transition: border-color 0.3s;
+    background-color: #f7fafc;
+    transition: all 0.3s;
 }
 
 .input-group input:focus {
     outline: none;
-    border-color: #42a5f5; /* Azul claro */
+    border-color: #63b3ed;
+    background-color: #ffffff;
+    box-shadow: 0 0 0 2px rgba(99, 179, 237, 0.2);
 }
 
 .forgot-password {
     text-align: right;
-    margin-bottom: 15px;
+    margin-bottom: 20px;
 }
 
 .forgot-password a {
-    color: #1976d2;
+    color: #4299e1;
     text-decoration: none;
     font-size: 14px;
     font-weight: 500;
-}
-
-.forgot-password a:hover {
-    text-decoration: underline;
 }
 
 .btn {
     width: 100%;
-    padding: 12px;
+    padding: 14px;
     border: none;
-    border-radius: 8px;
-    background-color: #1976d2; /* Azul primário */
+    border-radius: 10px;
+    background-color: #4299e1; /* Azul claro e moderno */
     color: white;
     font-size: 16px;
-    font-weight: 500;
+    font-weight: 600;
     cursor: pointer;
-    transition: background-color 0.3s;
+    transition: background-color 0.3s, transform 0.2s;
 }
 
 .btn:hover {
-    background-color: #1565c0; /* Azul mais escuro */
+    background-color: #3182ce;
+    transform: translateY(-2px);
 }
 
 .btn-google {
     background-color: #ffffff;
-    color: #444;
-    border: 1px solid #ddd;
+    color: #4a5568;
+    border: 1px solid #e2e8f0;
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 10px;
+    gap: 12px;
 }
 
 .btn-google:hover {
-    background-color: #f7f7f7;
-}
-
-.btn-google img {
-    width: 20px;
-    height: 20px;
-}
-
-.btn-danger {
-    background-color: #d32f2f;
-}
-
-.btn-danger:hover {
-    background-color: #c62828;
+    background-color: #f7fafc;
+    border-color: #cbd5e0;
 }
 
 .divider {
     text-align: center;
-    margin: 20px 0;
-    color: #aaa;
+    margin: 25px 0;
+    color: #a0aec0;
+    font-weight: 500;
 }
 
 .toggle-form {
     text-align: center;
-    margin-top: 20px;
-    font-size: 14px;
+    margin-top: 25px;
 }
 
 .toggle-form a {
-    color: #1976d2;
+    color: #4299e1;
     text-decoration: none;
-    font-weight: 500;
-}
-
-.toggle-form a:hover {
-    text-decoration: underline;
+    font-weight: 600;
 }
 
 /* --- ESTILOS DE MENSAGEM --- */
