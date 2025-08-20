@@ -1,140 +1,127 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Playlist de Humor</title>
-    
-    <!-- Explicação do Site -->
-    <!-- Este aplicativo gera playlists de música com base no humor selecionado pelo usuário, alterando dinamicamente o tema visual para combinar com a emoção. -->
-
-    <!-- Bootstrap CDN -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    
-    <!-- Google Fonts (Poppins) -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-
-    <!-- Custom CSS -->
+    <title>Moodify - Login</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <!-- Header -->
-    <header class="container text-center my-4">
-        <div class="d-flex justify-content-between align-items-center">
-            <h1 class="app-title">Playlist de Humor</h1>
-            <div class="form-check form-switch">
-                <input class="form-check-input" type="checkbox" role="switch" id="theme-switcher">
-                <label class="form-check-label" for="theme-switcher">🌙</label>
+    <!-- Formulário de Login -->
+    <div id="login-view" class="auth-page-container">
+        <div class="auth-wrapper">
+            <h1 class="auth-title">Moodify</h1>
+            <div class="form-container">
+                <h2>Login</h2>
+                <form id="login-form">
+                    <div class="input-group">
+                        <label for="login-email">Email</label>
+                        <input type="email" id="login-email" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="login-password">Senha</label>
+                        <input type="password" id="login-password" required>
+                    </div>
+                    <button type="submit" class="btn">Entrar</button>
+                </form>
+                <p class="divider">ou</p>
+                <button id="google-login-btn" class="btn btn-google">
+                    <img src="https://developers.google.com/identity/images/g-logo.png" alt="Google Logo">
+                    Entrar com Google
+                </button>
+                <p class="toggle-form">
+                    Não tem uma conta? <a href="#" id="show-signup">Crie uma agora</a>
+                </p>
             </div>
         </div>
-        <p class="lead">Como você está se sentindo hoje?</p>
-    </header>
+    </div>
 
-    <!-- Main Content -->
-    <main class="container">
-        
-        <!-- Seção de Seleção de Humor -->
-        <section id="mood-selection" class="text-center mb-5">
-            <div class="row justify-content-center g-3">
-                <div class="col-6 col-md-3">
-                    <button class="btn mood-btn w-100" data-mood="happy">
-                        <span class="mood-icon">😊</span>
-                        <span class="mood-name">Feliz</span>
-                        <span class="mood-description">Alegre e animado</span>
-                    </button>
-                </div>
-                <div class="col-6 col-md-3">
-                    <button class="btn mood-btn w-100" data-mood="sad">
-                        <span class="mood-icon">😢</span>
-                        <span class="mood-name">Triste</span>
-                        <span class="mood-description">Reflexivo e melancólico</span>
-                    </button>
-                </div>
-                <div class="col-6 col-md-3">
-                    <button class="btn mood-btn w-100" data-mood="energetic">
-                        <span class="mood-icon">⚡</span>
-                        <span class="mood-name">Energético</span>
-                        <span class="mood-description">Cheio de energia e ritmo</span>
-                    </button>
-                </div>
-                <div class="col-6 col-md-3">
-                    <button class="btn mood-btn w-100" data-mood="calm">
-                        <span class="mood-icon">😌</span>
-                        <span class="mood-name">Calmo</span>
-                        <span class="mood-description">Tranquilo e relaxado</span>
-                    </button>
-                </div>
-                <div class="col-6 col-md-3">
-                    <button class="btn mood-btn w-100" data-mood="relaxed">
-                        <span class="mood-icon">🧘</span>
-                        <span class="mood-name">Relaxado</span>
-                        <span class="mood-description">Sereno e em paz</span>
-                    </button>
-                </div>
-                <div class="col-6 col-md-3">
-                    <button class="btn mood-btn w-100" data-mood="focused">
-                        <span class="mood-icon">🧠</span>
-                        <span class="mood-name">Focado</span>
-                        <span class="mood-description">Concentrado e produtivo</span>
-                    </button>
-                </div>
-                <div class="col-6 col-md-3">
-                    <button class="btn mood-btn w-100" data-mood="irritated">
-                        <span class="mood-icon">😠</span>
-                        <span class="mood-name">Irritado</span>
-                        <span class="mood-description">Desabafando a frustração</span>
-                    </button>
-                </div>
-                <div class="col-6 col-md-3">
-                    <button class="btn mood-btn w-100" data-mood="playful">
-                        <span class="mood-icon">🤪</span>
-                        <span class="mood-name">Divertido</span>
-                        <span class="mood-description">Leve e brincalhão</span>
-                    </button>
-                </div>
+    <!-- Formulário de Cadastro -->
+    <div id="signup-view" class="auth-page-container" style="display: none;">
+        <div class="auth-wrapper">
+            <h1 class="auth-title">Moodify</h1>
+            <div class="form-container">
+                <h2>Criar Conta</h2>
+                <form id="signup-form">
+                    <div class="input-group">
+                        <label for="signup-name">Nome</label>
+                        <input type="text" id="signup-name" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="signup-email">Email</label>
+                        <input type="email" id="signup-email" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="signup-password">Senha (mínimo 6 caracteres)</label>
+                        <input type="password" id="signup-password" required minlength="6">
+                    </div>
+                    <button type="submit" class="btn">Criar Conta</button>
+                </form>
+                <p class="toggle-form">
+                    Já tem uma conta? <a href="#" id="show-login">Faça o login</a>
+                </p>
             </div>
-        </section>
+        </div>
+    </div>
 
-        <!-- Seção da Playlist Gerada -->
-        <section id="playlist-section" class="d-none">
-            <h2 class="text-center mb-4">Sua Playlist <span id="mood-title"></span></h2>
-            <div id="playlist-output" class="list-group">
-                <!-- Músicas serão inseridas aqui via JS -->
-            </div>
-            <div class="text-center mt-4">
-                <button class="btn btn-success" onclick="saveToSpotify()">Salvar no Spotify</button>
-                <button class="btn btn-danger" onclick="saveToYouTubeMusic()">Salvar no YouTube Music</button>
-            </div>
-        </section>
-
-        <!-- Seção de Gamificação e Histórico (Simulado) -->
-        <section id="extra-features" class="mt-5 text-center">
-            <div class="row">
-                <div class="col-md-6 mb-3">
-                    <h3>🏆 Gamificação</h3>
-                    <p>Pontos: <span id="points">0</span> | Conquistas: Nenhuma</p>
+    <!-- Área Principal do App (Visível após Login) -->
+    <div id="user-view" style="display: none;">
+        <div class="app-layout">
+            <!-- Menu Lateral -->
+            <nav class="sidebar">
+                <div class="sidebar-header">
+                    <h3>Moodify</h3>
                 </div>
-                <div class="col-md-6 mb-3">
-                    <h3>📜 Histórico</h3>
-                    <p>Último humor: <span id="last-mood">Nenhum</span></p>
+                <ul class="sidebar-nav">
+                    <li><a href="#" class="nav-link active" data-page="home">🏠 Início</a></li>
+                    <li><a href="#" class="nav-link" data-page="history">📜 Histórico</a></li>
+                    <li><a href="#" class="nav-link" data-page="profile">👤 Perfil</a></li>
+                </ul>
+                <div class="sidebar-footer">
+                    <button id="logout-btn" class="btn btn-logout">Sair</button>
                 </div>
-            </div>
-        </section>
+            </nav>
 
-    </main>
+            <!-- Conteúdo Principal -->
+            <main class="main-content">
+                <!-- Página Início -->
+                <div class="page active" id="page-home">
+                    <h2 id="welcome-message"></h2>
+                    <p class="page-subtitle">Como você está se sentindo hoje?</p>
+                    <div class="mood-selector">
+                        <div class="mood-buttons">
+                            <button class="mood-btn" data-mood="feliz">😊 Feliz</button>
+                            <button class="mood-btn" data-mood="triste">😢 Triste</button>
+                            <button class="mood-btn" data-mood="animado">🎉 Animado</button>
+                            <button class="mood-btn" data-mood="foco">💻 Com Foco</button>
+                        </div>
+                    </div>
+                    <div id="mood-content" class="mood-content-area">
+                        <p>Selecione um humor para ver uma sugestão.</p>
+                    </div>
+                </div>
 
-    <!-- Footer -->
-    <footer class="text-center mt-5 py-3">
-        <p>&copy; 2025 Playlist de Humor. Criado com ❤️.</p>
-    </footer>
+                <!-- Página Histórico -->
+                <div class="page" id="page-history" style="display: none;">
+                    <h2>Meu Histórico</h2>
+                    <p>Em breve, aqui você poderá ver seu histórico de humores e sugestões.</p>
+                </div>
 
-    <!-- GSAP CDN -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    
-    <!-- Custom JS (com defer) -->
-    <script src="script.js" defer></script>
+                <!-- Página Perfil -->
+                <div class="page" id="page-profile" style="display: none;">
+                    <h2>Perfil do Usuário</h2>
+                    <div id="profile-info"></div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+
+    <!-- Seu script -->
+    <script src="script.js"></script>
 </body>
 </html>
