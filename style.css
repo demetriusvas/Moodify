@@ -6,11 +6,19 @@
     box-sizing: border-box;
 }
 
+html, body {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 body {
     font-family: 'Roboto', sans-serif;
     background-color: #eef1f5; /* Cinza claro azulado */
     color: #333;
-    margin: 0; /* Garante que não há margens */
+    width: 100%;
 }
 
 /* --- ESTILOS DA PÁGINA DE AUTENTICAÇÃO --- */
