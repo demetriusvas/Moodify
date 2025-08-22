@@ -24,8 +24,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Function to redirect to Spotify for authorization
     function redirectToSpotifyAuth() {
+        console.log("redirectToSpotifyAuth called.");
         const scopes = 'user-read-private user-read-email user-top-read'; // Add necessary scopes
         const authUrl = `https://accounts.spotify.com/authorize?client_id=${spotifyClientId}&response_type=token&redirect_uri=${encodeURIComponent(redirectUri)}&scope=${encodeURIComponent(scopes)}`;
+        console.log("Spotify Auth URL:", authUrl);
         window.location = authUrl;
     }
 
