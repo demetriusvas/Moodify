@@ -575,6 +575,7 @@ form {
 
     .main-content {
         padding: 20px; /* Adjust padding for smaller screens */
+        padding-top: 80px; /* Add padding to make space for buttons */
         margin-left: 0; /* Remove margin from sidebar */
     }
 
