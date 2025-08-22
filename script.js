@@ -15,6 +15,76 @@ document.addEventListener('DOMContentLoaded', () => {
     const auth = firebase.auth();
     console.log("Firebase inicializado.");
 
+    // --- Spotify API Credentials and Token Management (Implicit Grant Flow) ---
+    const spotifyClientId = 'b4ab666dc3b541d5bea4b8970e39f499';
+    const redirectUri = 'https://moodify-nine-chi.vercel.app/';
+    let spotifyAccessToken = null;
+    let tokenExpiresIn = 0;
+    let tokenObtainedTime = 0;
+
+    // Function to redirect to Spotify for authorization
+    function redirectToSpotifyAuth() {
+        const scopes = 'user-read-private user-read-email user-top-read'; // Add necessary scopes
+        const authUrl = `https://accounts.spotify.com/authorize?client_id=${spotifyClientId}&response_type=token&redirect_uri=${encodeURIComponent(redirectUri)}&scope=${encodeURIComponent(scopes)}`;
+        window.location = authUrl;
+    }
+
+    // Function to parse access token from URL hash
+    function getSpotifyAccessTokenFromUrl() {
+        const hash = window.location.hash.substring(1);
+        const params = new URLSearchParams(hash);
+        const accessToken = params.get('access_token');
+        const expiresIn = params.get('expires_in');
+
+        if (accessToken && expiresIn) {
+            spotifyAccessToken = accessToken;
+            tokenExpiresIn = parseInt(expiresIn, 10);
+            tokenObtainedTime = Date.now();
+            console.log('Spotify Access Token obtained from URL:', spotifyAccessToken);
+            // Clear hash from URL
+            window.history.pushState("", document.title, window.location.pathname + window.location.search);
+            return true;
+        }
+        return false;
+    }
+
+    // Check for token on page load
+    if (!getSpotifyAccessTokenFromUrl()) {
+        // If no token in URL, check if we have one in localStorage (for persistence)
+        const storedToken = localStorage.getItem('spotifyAccessToken');
+        const storedExpiresIn = localStorage.getItem('spotifyTokenExpiresIn');
+        const storedObtainedTime = localStorage.getItem('spotifyTokenObtainedTime');
+
+        if (storedToken && storedExpiresIn && storedObtainedTime) {
+            const now = Date.now();
+            const expiryTime = parseInt(storedObtainedTime, 10) + (parseInt(storedExpiresIn, 10) * 1000);
+            if (now < expiryTime) {
+                spotifyAccessToken = storedToken;
+                tokenExpiresIn = parseInt(storedExpiresIn, 10);
+                tokenObtainedTime = parseInt(storedObtainedTime, 10);
+                console.log('Spotify Access Token restored from localStorage:', spotifyAccessToken);
+            } else {
+                console.log('Stored Spotify token expired.');
+                localStorage.removeItem('spotifyAccessToken');
+                localStorage.removeItem('spotifyTokenExpiresIn');
+                localStorage.removeItem('spotifyTokenObtainedTime');
+            }
+        }
+    } else {
+        // If token was just obtained from URL, store it
+        localStorage.setItem('spotifyAccessToken', spotifyAccessToken);
+        localStorage.setItem('spotifyTokenExpiresIn', tokenExpiresIn);
+        localStorage.setItem('spotifyTokenObtainedTime', tokenObtainedTime);
+    }
+
+    // Function to check if token is valid
+    function isSpotifyTokenValid() {
+        if (!spotifyAccessToken) return false;
+        const now = Date.now();
+        const expiryTime = tokenObtainedTime + (tokenExpiresIn * 1000);
+        return now < expiryTime;
+    }
+
     // --- ELEMENTOS DA UI ---
     const loginView = document.getElementById('login-view');
     const signupView = document.getElementById('signup-view');
@@ -224,6 +294,18 @@ document.addEventListener('DOMContentLoaded', () => {
         const sidebarNav = document.querySelector('.sidebar-nav');
         const pages = document.querySelectorAll('.page');
 
+        // Mood to Spotify Genre Mapping
+        const moodGenreMap = {
+            feliz: 'pop,dance',
+            triste: 'sad,acoustic',
+            animado: 'party,edm',
+            foco: 'ambient,classical',
+            relaxado: 'chill,jazz',
+            energico: 'rock,metal',
+            pensativo: 'folk,indie',
+            irritado: 'punk,heavy-metal'
+        };
+
         // 1. Preenche informações do usuário
         welcomeMessage.textContent = `Bem-vindo(a), ${user.displayName || 'Usuário'}!`;
         profileInfo.innerHTML = `
@@ -231,6 +313,29 @@ document.addEventListener('DOMContentLoaded', () => {
             <p><strong>Email:</strong> ${user.email}</p>
             <p><strong>UID:</strong> ${user.uid}</p>
         `;
+
+        // --- Spotify Connect Elements ---
+        const spotifyConnectArea = document.getElementById('spotify-connect-area');
+        const connectSpotifyBtn = document.getElementById('connect-spotify-btn');
+
+        if (connectSpotifyBtn) {
+            connectSpotifyBtn.addEventListener('click', redirectToSpotifyAuth);
+        }
+
+        // Function to update Spotify UI visibility
+        function updateSpotifyUI() {
+            if (isSpotifyTokenValid()) {
+                spotifyConnectArea.style.display = 'none';
+                moodButtonsContainer.style.display = 'grid'; // Show mood buttons
+            } else {
+                spotifyConnectArea.style.display = 'block';
+                moodButtonsContainer.style.display = 'none'; // Hide mood buttons
+                moodContent.innerHTML = '<p>Conecte-se ao Spotify para gerar músicas!</p>';
+            }
+        }
+
+        // Initial UI update
+        updateSpotifyUI();
 
         // 2. Lógica de navegação
         sidebarNav.addEventListener('click', (e) => {
@@ -247,19 +352,8 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-        // 3. Lógica do seletor de humor
-        const moodSuggestions = {
-            feliz: "Que ótimo! Que tal ouvir uma playlist de pop animado para manter a energia?",
-            triste: "Tudo bem não se sentir bem. Uma música ambiente calma pode ajudar a relaxar.",
-            animado: "Excelente! É um ótimo dia para músicas dançantes. Vamos agitar!",
-            foco: "Hora de produzir! Músicas instrumentais ou lo-fi são perfeitas para concentração.",
-            relaxado: "Para um momento de paz, experimente músicas instrumentais suaves ou sons da natureza.",
-            energico: "Sinta a batida! Playlists de eletrônica ou rock podem te dar o gás que precisa.",
-            pensativo: "Músicas acústicas ou clássicas são ideais para reflexão e introspecção.",
-            irritado: "Respire fundo. Uma playlist de jazz suave ou blues pode ajudar a acalmar os ânimos."
-        };
-
-        moodButtonsContainer.addEventListener('click', (e) => {
+        // 3. Lógica do seletor de humor e integração Spotify
+        moodButtonsContainer.addEventListener('click', async (e) => {
             const target = e.target.closest('.mood-btn');
             if (target) {
                 // Remove 'selected' class from all mood buttons
@@ -271,9 +365,78 @@ document.addEventListener('DOMContentLoaded', () => {
                 target.classList.add('selected');
 
                 const selectedMood = target.dataset.mood;
-                moodContent.innerHTML = `<p>${moodSuggestions[selectedMood]}</p>`;
+                const genres = moodGenreMap[selectedMood];
+
+                if (!genres) {
+                    moodContent.innerHTML = '<p>Nenhuma sugestão de gênero encontrada para este humor.</p>';
+                    return;
+                }
+
+                if (!isSpotifyTokenValid()) {
+                    moodContent.innerHTML = '<p>Seu token do Spotify expirou ou não está disponível. Por favor, conecte-se novamente.</p>';
+                    updateSpotifyUI(); // Show connect button
+                    return;
+                }
+
+                moodContent.innerHTML = '<p>Buscando músicas...</p>';
+
+                try {
+                    const response = await fetch(`https://api.spotify.com/v1/recommendations?limit=20&seed_genres=${genres}`,
+                        {
+                            headers: {
+                                'Authorization': 'Bearer ' + spotifyAccessToken
+                            }
+                        }
+                    );
+
+                    if (response.status === 401) { // Token expired or invalid
+                        console.warn("Spotify token expired or invalid. Prompting re-authentication.");
+                        moodContent.innerHTML = '<p>Seu token do Spotify expirou ou é inválido. Por favor, conecte-se novamente.</p>';
+                        updateSpotifyUI(); // Show connect button
+                        return;
+                    } else if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    } else {
+                        const data = await response.json();
+                        displaySongs(data.tracks);
+                    }
+
+                } catch (error) {
+                    console.error("Error fetching Spotify recommendations:", error);
+                    moodContent.innerHTML = '<p>Erro ao buscar sugestões de músicas. Tente novamente.</p>';
+                }
             }
         });
+
+        function displaySongs(tracks) {
+            moodContent.innerHTML = ''; // Clear previous content
+            if (tracks.length === 0) {
+                moodContent.innerHTML = '<p>Nenhuma música encontrada para este humor.</p>';
+                return;
+            }
+
+            const ul = document.createElement('ul');
+            ul.style.listStyle = 'none';
+            ul.style.padding = '0';
+
+            tracks.forEach(track => {
+                const li = document.createElement('li');
+                li.style.marginBottom = '10px';
+                li.style.borderBottom = '1px solid var(--border-color)';
+                li.style.paddingBottom = '10px';
+
+                const trackName = track.name;
+                const artistName = track.artists.map(artist => artist.name).join(', ');
+                const externalUrl = track.external_urls.spotify;
+
+                li.innerHTML = `
+                    <p><strong><a href="${externalUrl}" target="_blank" style="color: var(--primary-color); text-decoration: none;">${trackName}</a></strong></p>
+                    <p style="font-size: 0.9em; color: var(--text-color-secondary);">${artistName}</p>
+                `;
+                ul.appendChild(li);
+            });
+            moodContent.appendChild(ul);
+        }
     }
 
     
