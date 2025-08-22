@@ -317,29 +317,6 @@ document.addEventListener('DOMContentLoaded', () => {
             <p><strong>UID:</strong> ${user.uid}</p>
         `;
 
-        // --- Spotify Connect Elements ---
-        const spotifyConnectArea = document.getElementById('spotify-connect-area');
-        const connectSpotifyBtn = document.getElementById('connect-spotify-btn');
-
-        if (connectSpotifyBtn) {
-            connectSpotifyBtn.addEventListener('click', redirectToSpotifyAuth);
-        }
-
-        // Function to update Spotify UI visibility
-        function updateSpotifyUI() {
-            if (isSpotifyTokenValid()) {
-                spotifyConnectArea.style.display = 'none';
-                moodButtonsContainer.style.display = 'grid'; // Show mood buttons
-            } else {
-                spotifyConnectArea.style.display = 'block';
-                moodButtonsContainer.style.display = 'none'; // Hide mood buttons
-                moodContent.innerHTML = '<p>Conecte-se ao Spotify para gerar músicas!</p>';
-            }
-        }
-
-        // Initial UI update
-        updateSpotifyUI();
-
         // 2. Lógica de navegação
         sidebarNav.addEventListener('click', (e) => {
             if (e.target.tagName === 'A') {
@@ -393,9 +370,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     );
 
                     if (response.status === 401) { // Token expired or invalid
-                        console.warn("Spotify token expired or invalid. Prompting re-authentication.");
-                        moodContent.innerHTML = '<p>Seu token do Spotify expirou ou é inválido. Por favor, conecte-se novamente.</p>';
-                        updateSpotifyUI(); // Show connect button
+                        console.warn("Spotify token expired or invalid. Redirecting for re-authentication.");
+                        moodContent.innerHTML = '<p>Seu token do Spotify expirou ou é inválido. Redirecionando para autenticação...</p>';
+                        redirectToSpotifyAuth();
                         return;
                     } else if (!response.ok) {
                         throw new Error(`HTTP error! status: ${response.status}`);
@@ -434,11 +411,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 li.innerHTML = `
                     <p><strong><a href="${externalUrl}" target="_blank" style="color: var(--primary-color); text-decoration: none;">${trackName}</a></strong></p>
-                    <p style="font-size: 0.9em; color: var(--text-color-secondary);">${artistName}</p>
+                    <p style="font-size: 0.9em; color: var(--text-color-secondary);"> ${artistName}</p>
                 `;
                 ul.appendChild(li);
             });
             moodContent.appendChild(ul);
+
+            // Add "Salvar no Spotify" button
+            const saveButton = document.createElement('button');
+            saveButton.textContent = 'Salvar no Spotify';
+            saveButton.className = 'btn btn-primary'; // Apply existing button styles
+            saveButton.style.marginTop = '20px';
+            saveButton.style.width = '100%';
+            saveButton.onclick = () => {
+                alert('Funcionalidade de salvar no Spotify ainda não implementada.');
+                // TODO: Implement saving to Spotify playlist
+            };
+            moodContent.appendChild(saveButton);
         }
     }
 
