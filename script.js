@@ -67,6 +67,32 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // --- Hamburger Menu Logic ---
+    const hamburgerMenu = document.getElementById('hamburger-menu');
+    const sidebar = document.querySelector('.sidebar');
+    const mainContent = document.querySelector('.main-content');
+
+    if (hamburgerMenu && sidebar && mainContent) {
+        hamburgerMenu.addEventListener('click', () => {
+            sidebar.classList.toggle('active');
+        });
+
+        // Close sidebar when clicking outside of it on mobile
+        mainContent.addEventListener('click', (e) => {
+            // Check if the sidebar is active and the click is outside the sidebar itself
+            if (sidebar.classList.contains('active') && !sidebar.contains(e.target) && !hamburgerMenu.contains(e.target)) {
+                sidebar.classList.remove('active');
+            }
+        });
+
+        // Close sidebar if window is resized to a larger size (desktop view)
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 768) { // Assuming 768px is the breakpoint
+                sidebar.classList.remove('active');
+            }
+        });
+    }
+
     // --- LÓGICA DE AUTENTICAÇÃO ---
     signupForm.addEventListener('submit', (e) => {
         e.preventDefault();

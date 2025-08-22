@@ -530,3 +530,64 @@ form {
 .theme-toggle:hover {
     background-color: var(--bg-color-primary);
 }
+
+/* Hamburger Menu (Mobile) */
+.hamburger-menu {
+    display: none; /* Hidden by default */
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background-color: var(--bg-color-secondary);
+    color: var(--text-color-primary);
+    border: 1px solid var(--border-color);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    font-size: 20px;
+    box-shadow: 0 2px 5px var(--shadow-color);
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s, box-shadow 0.3s;
+    z-index: 1000;
+}
+
+.hamburger-menu:hover {
+    background-color: var(--bg-color-primary);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        transform: translateX(-100%);
+        transition: transform 0.3s ease-in-out;
+        z-index: 100;
+    }
+
+    .sidebar.active {
+        transform: translateX(0);
+    }
+
+    .main-content {
+        padding: 20px; /* Adjust padding for smaller screens */
+        margin-left: 0; /* Remove margin from sidebar */
+    }
+
+    .hamburger-menu {
+        display: flex; /* Show on small screens */
+    }
+
+    .theme-toggle {
+        top: 20px;
+        right: 70px; /* Adjust position to not overlap with hamburger */
+    }
+
+    .mood-buttons {
+        grid-template-columns: repeat(2, 1fr); /* 2 columns on small screens */
+    }
+}
