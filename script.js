@@ -35,6 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function getSpotifyAccessTokenFromUrl() {
         const hash = window.location.hash.substring(1);
         const params = new URLSearchParams(hash);
+        console.log("URL Hash Parameters:", Object.fromEntries(params.entries())); // Log all parameters
         const accessToken = params.get('access_token');
         const expiresIn = params.get('expires_in');
 
