@@ -361,6 +361,8 @@ form {
     overflow-y: auto;
     background-color: var(--bg-color-primary);
     transition: background-color 0.3s;
+    max-width: 1200px; /* Limit width on large screens */
+    margin: 0 auto; /* Center the content */
 }
 
 .page {
